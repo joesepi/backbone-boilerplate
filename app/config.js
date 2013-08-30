@@ -6,14 +6,14 @@ require.config({
     "vendor": "../vendor",
 
     // Almond is used to lighten the output filesize.
-    "almond": "../vendor/bower/almond/almond",
+    "almond": "../../bower_components/almond/almond",
 
     // Opt for Lo-Dash Underscore compatibility build over Underscore.
-    "underscore": "../vendor/bower/lodash/dist/lodash.underscore",
+    "underscore": "../../bower_components/lodash/dist/lodash.underscore",
 
     // Map remaining vendor dependencies.
-    "jquery": "../vendor/bower/jquery/jquery",
-    "backbone": "../vendor/bower/backbone/backbone"
+    "jquery": "../../bower_components/jquery/jquery",
+    "backbone": "../../bower_components/backbone/backbone"
   },
 
   shim: {
