@@ -1,14 +1,14 @@
 // Grunt configuration updated to latest Grunt.  That means your minimum
 // version necessary to run these tasks is Grunt 0.4.
 module.exports = function(grunt) {
-    "use strict";
+    'use strict';
 
     grunt.initConfig({
         // Empty and remove `dist/` directory.
-        clean: ["dist/"],
+        clean: ['dist/'],
 
         // Run your source code through JSHint's defaults.
-        jshint: ["app/**/*.js"],
+        jshint: ['app/**/*.js'],
 
         // This task uses James Burke's excellent r.js AMD builder to take all
         // modules and concatenate them into a single file.
@@ -16,19 +16,19 @@ module.exports = function(grunt) {
             release: {
                 options: {
                     // Include the main ration file.
-                    mainConfigFile: "app/config.js",
+                    mainConfigFile: 'app/config.js',
 
                     // Setting the base url to the distribution directory allows the
                     // Uglify minification process to correctly map paths for Source
                     // Maps.
-                    baseUrl: "dist/app",
+                    baseUrl: 'dist/app',
 
                     // Include Almond to slim down the built filesize.
-                    name: "almond",
+                    name: 'almond',
 
                     // Set main.js as the main entry point.
-                    include: ["main"],
-                    insertRequire: ["main"],
+                    include: ['main'],
+                    insertRequire: ['main'],
 
                     // Since we bootstrap with nested `require` calls this option allows
                     // R.js to find them.
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                     wrap: true,
 
                     // Output file.
-                    out: "dist/source.min.js",
+                    out: 'dist/source.min.js',
 
                     // Enable Source Map generation.
                     generateSourceMaps: true,
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
                     preserveLicenseComments: false,
 
                     // Minify using UglifyJS.
-                    optimize: "uglify2"
+                    optimize: 'uglify2'
                 }
             }
         },
@@ -60,16 +60,16 @@ module.exports = function(grunt) {
         styles: {
             // Out the concatenated contents of the following styles into the below
             // development file path.
-            "dist/styles.css": {
+            'dist/styles.css': {
                 // Point this to where your `index.css` file is location.
-                src: "app/styles/index.css",
+                src: 'app/styles/index.css',
 
                 // The relative path to use for the @imports.
-                paths: ["app/styles"],
+                paths: ['app/styles'],
 
                 // Rewrite image paths during release to be relative to the `img`
                 // directory.
-                forceRelative: "/app/img/"
+                forceRelative: '/app/img/'
             }
         },
 
@@ -77,14 +77,14 @@ module.exports = function(grunt) {
         cssmin: {
             release: {
                 files: {
-                    "dist/styles.min.css": ["dist/styles.css"]
+                    'dist/styles.min.css': ['dist/styles.css']
                 }
             }
         },
 
         server: {
             options: {
-                host: "0.0.0.0",
+                host: '0.0.0.0',
                 port: 8000
             },
 
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 
             release: {
                 options: {
-                    prefix: "dist"
+                    prefix: 'dist'
                 }
             },
 
@@ -107,8 +107,21 @@ module.exports = function(grunt) {
         processhtml: {
             release: {
                 files: {
-                    "dist/index.html": ["index.html"]
+                    'dist/index.html': ['index.html']
                 }
+            }
+        },
+
+        concat: {
+            options: {
+                separator: ',',
+                // Using banner and footer to wrap concat objects
+                banner: 'define(function(require, exports, module) { module.exports = [',
+                footer: '];});'
+            },
+            dist: {
+                src: ['app/data/src/albums/**/*.js'],
+                dest: 'app/data/albums.js'
             }
         },
 
@@ -116,8 +129,8 @@ module.exports = function(grunt) {
         copy: {
             release: {
                 files: [
-                    { src: ["app/**"], dest: "dist/" },
-                    { src: "vendor/**", dest: "dist/" }
+                    { src: ['app/**'], dest: 'dist/' },
+                    { src: 'bower_components/**', dest: 'dist/' }
                 ]
             }
         },
@@ -131,26 +144,26 @@ module.exports = function(grunt) {
                 colors: true,
                 captureTimeout: 7000,
 
-                reporters: ["progress"],
-                browsers: ["PhantomJS"],
+                reporters: ['progress'],
+                browsers: ['PhantomJS'],
 
                 plugins: [
-                    "karma-mocha",
-                    "karma-phantomjs-launcher"
+                    'karma-mocha',
+                    'karma-phantomjs-launcher'
                 ],
 
                 proxies: {
-                    "/base": "http://localhost:<%=server.test.options.port%>"
+                    '/base': 'http://localhost:<%=server.test.options.port%>'
                 }
             },
 
             mocha: {
                 options: {
-                    frameworks: ["mocha"],
+                    frameworks: ['mocha'],
 
                     files: [
-                        "bower_components/requirejs/require.js",
-                        "test/mocha/test-runner.js"
+                        'bower_components/requirejs/require.js',
+                        'test/mocha/test-runner.js'
                     ]
                 }
             }
@@ -158,25 +171,26 @@ module.exports = function(grunt) {
     });
 
     // Grunt contribution tasks.
-    grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-contrib-cssmin");
-    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // Third-party tasks.
-    grunt.loadNpmTasks("grunt-karma");
-    grunt.loadNpmTasks("grunt-processhtml");
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-processhtml');
 
     // Grunt BBB tasks.
-    grunt.loadNpmTasks("grunt-bbb-server");
-    grunt.loadNpmTasks("grunt-bbb-requirejs");
-    grunt.loadNpmTasks("grunt-bbb-styles");
+    grunt.loadNpmTasks('grunt-bbb-server');
+    grunt.loadNpmTasks('grunt-bbb-requirejs');
+    grunt.loadNpmTasks('grunt-bbb-styles');
 
     // When running the default Grunt command, just lint the code.
-    grunt.registerTask("default", [
-        "clean", "jshint", "processhtml", "copy", "requirejs", "styles", "cssmin"
+    grunt.registerTask('default', [
+        'clean', 'jshint', 'processhtml', 'copy', 'requirejs', 'styles', 'cssmin'
     ]);
 
     // The test task take care of starting test server and running tests.
-    grunt.registerTask("test", ["jshint", "server:test", "karma"]);
+    grunt.registerTask('test', ['jshint', 'server:test', 'karma']);
 };
